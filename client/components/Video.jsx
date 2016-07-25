@@ -17,12 +17,36 @@ class Video extends React.Component {
       setTimeout(() => video.className = 'video', 2000);
     });
 	}
+	
+	emitPlayAndListenForPause(e) {
+		const video = e.target;
+		this.props.socket.emit('play', video.currentTime);
+		this.props.socket.on('pause', function(otherTime) {
+			console.log('Recieved time: ',otherTime)
+			if(Math.floor(video.currentTime) > Math.floor(otherTime) + .5 || Math.floor(video.currentTime) < Math.floor(otherTime) - .5) {
+				video.currentTime = otherTime;
+			}
+			video.pause();
+		});
+	}
+
+	emitPauseAndListenForPlay(e) {
+		const video = e.target;
+		this.props.socket.emit('pause', video.currentTime);
+		this.props.socket.on('play', function(otherTime) {
+			console.log('Recieved time: ',otherTime)
+			if(Math.floor(video.currentTime) > Math.floor(otherTime) + .5 || Math.floor(video.currentTime) < Math.floor(otherTime) - .5) {
+				video.currentTime = otherTime;
+			}
+			video.play();
+		});
+	}
 
 	render() {
 		return (
 			<div className="video-container">
 		    <div className="video-border"></div>
-		    <video className="video" controls autoPlay>
+		    <video onPlay={ this.emitPlayAndListenForPause.bind(this) } onPause={ this.emitPauseAndListenForPlay.bind(this) } className="video" controls autoPlay>
 		      <source src="" type="video/mp4"></source>
 		    </video>
 		    <div className="video-border"></div>
