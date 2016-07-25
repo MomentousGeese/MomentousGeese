@@ -23,10 +23,19 @@ io.on('connection', (socket) => {
     console.log('A user disconnected with socket id', socket.id);
   });
 
-
   socket.on('chat message', (msg) => {
     console.log(msg);
     socket.broadcast.emit('chat message', msg);
+  });
+
+  socket.on('play', (time) => {
+    console.log('Play command recieved');
+    socket.broadcast.emit('play', time);
+  });
+
+  socket.on('pause', (time) => {
+    console.log('Pause command recieved');
+    socket.broadcast.emit('pause', time);
   });
 });
 

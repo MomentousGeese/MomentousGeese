@@ -38,7 +38,7 @@ class App extends React.Component {
           </div>
         </div>
         <div className="wrapper">
-          <Video />
+          <Video socket={this.props.socket} />
           <ChatSpace socket={this.props.socket} />
           <button id="start-stream">Start Stream</button>
         </div>
