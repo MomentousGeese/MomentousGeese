@@ -28,12 +28,14 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('chat message', msg);
   });
 
-  socket.on('pause', () => {
-    socket.broadcast.emit('pause');
+  socket.on('play', () => {
+    console.log('Play command recieved');
+    socket.broadcast.emit('play');
   });
 
-  socket.on('play', () => {
-    socket.broadcast.emit('play');
+  socket.on('pause', () => {
+    console.log('Pause command recieved');
+    socket.broadcast.emit('pause');
   });
 });
 

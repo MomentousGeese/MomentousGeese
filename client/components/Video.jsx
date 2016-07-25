@@ -18,7 +18,7 @@ class Video extends React.Component {
     });
 	}
 	
-emitPlayAndListenForPause(e) {
+	emitPlayAndListenForPause(e) {
 		const video = e.target;
 		this.props.socket.emit('play');
 		this.props.socket.on('pause', function() {
