@@ -23,7 +23,7 @@ class Video extends React.Component {
 		this.props.socket.emit('play', video.currentTime);
 		this.props.socket.on('pause', function(otherTime) {
 			console.log('Recieved time: ',otherTime)
-			if(video.currentTime !== otherTime) {
+			if(Math.floor(video.currentTime) > Math.floor(otherTime) + .5 || Math.floor(video.currentTime) < Math.floor(otherTime) - .5) {
 				video.currentTime = otherTime;
 			}
 			video.pause();
@@ -35,7 +35,7 @@ class Video extends React.Component {
 		this.props.socket.emit('pause', video.currentTime);
 		this.props.socket.on('play', function(otherTime) {
 			console.log('Recieved time: ',otherTime)
-			if(video.currentTime !== otherTime) {
+			if(Math.floor(video.currentTime) > Math.floor(otherTime) + .5 || Math.floor(video.currentTime) < Math.floor(otherTime) - .5) {
 				video.currentTime = otherTime;
 			}
 			video.play();
